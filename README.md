@@ -43,6 +43,8 @@ as noted in [Flask's documentation](https://flask.palletsprojects.com/en/3.0.x/d
 - [Debian Linux](https://www.debian.org/) The Operating System the VPS runs
   (because Windows & MS are disgusting).
 
+For the purposes of user registration and login, the system stores information (such as username, email, and password) in the `user` table of the backend. The passwords are hashed using the `Bcrypt` hashing algorithm designed by Nelis Provos and David Mazières. The passwords are salted before being hashed to improve security against rainbow-table / lookup attacks. The hash is completely random and not accessable to anyone, [not even me](https://www.geeksforgeeks.org/hashing-passwords-in-python-with-bcrypt/).
+
 ## Helpful Resources
 
 Some of the concepts regarding security and controls implemented in the site
