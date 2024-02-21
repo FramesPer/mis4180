@@ -47,5 +47,5 @@ as noted in [Flask's documentation](https://flask.palletsprojects.com/en/3.0.x/d
 
 Some of the concepts regarding security and controls implemented in the site
 abide by the owasp secure login guide:
-<https://owasp.org/www-pdf-archive/How_to_Build_a_Secure_Login_BenBroussard_June2011.pd>
+<https://owasp.org/www-pdf-archive/How_to_Build_a_Secure_Login_BenBroussard_June2011.pdf>
 
