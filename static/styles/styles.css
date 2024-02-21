@@ -1,0 +1,278 @@
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../../static/fonts/ubuntu/Ubuntu-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../../static/fonts/ubuntu/Ubuntu-Light.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+	display: block;
+	margin: 20px auto;
+	padding: 15px;
+	max-width: 1100px;
+	display: block;
+	background-color: #1a1c1d;
+	font-family: 'ubuntu', sans-serif, monospace;
+	font-size: 1.1rem;
+	color: #c4c4c4; 
+}
+
+.header {
+	margin: 0 0 50px;
+}
+
+#headerLink {
+	color: #c8c8c8;
+	font-size: 1.98rem;
+	text-decoration: none;
+}
+
+.accountSection {
+	display: flex;
+	float: right;
+}
+
+.accountSection p{
+	margin: 0;
+	padding: 0;
+}
+
+.accountSection a {
+	padding: 0 10px;
+}
+
+a:link, a:visited {
+  color: #dd9a7e; 
+}
+
+.showcase {
+	margin: 150px 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.showcase img {
+	padding: 0 50px 0 0;
+}
+
+h2 {
+	margin: 20px 0;
+	color: #d0d0d0;
+	font-weight: 300;
+	font-size: 1.2rem;
+}
+
+form {
+	border: 1px solid #292929;
+    padding: 20px;
+    border-radius: 2px;
+    background-color: rgb(31, 33, 34);
+    width: 400px;
+}
+
+input {
+	width: 75%;
+	min-height: 28px;
+	background-color: rgb(48, 52, 54);
+	border: 1px solid #3c4048;
+	color: #F7F7F7;
+}
+
+button {
+    width: 80%;
+    background-color: #8f5e4a;
+    color: #c4c4c4;
+    padding: 14px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #a06d58;
+}
+
+label {
+    margin-bottom: 8px;
+    display: block;
+    color: rgb(200, 195, 188);
+}
+
+select {
+	padding: 8px 16px;
+	border: 1px solid #484848;
+	border-radius: 2px;
+	background-color: rgb(48, 52, 54);
+	cursor: pointer;
+	width: 75%;
+	color: #F7F7F7;
+}
+
+#creationForm {
+    width: 900px;
+}
+
+#creationForm button {
+    width: 300px;
+}
+
+#creationForm input, select {
+    width: 650px;
+}
+
+#creationForm #additional {
+	width: 650px;
+	min-height: 100px;
+	padding: 0;
+	resize: None;
+	background-color: rgb(48, 52, 54);
+	border: 1px solid #484848;
+	color: #F7F7F7;
+}
+
+h1 {
+	color: #d0d0d0;
+	font-size: 1.5rem;
+}
+
+#photosID {
+	margin: 30px 0 15px;
+}
+
+.continueButton {
+	margin: 20px 0 0 0;
+}
+
+.textWrap {
+	max-width: 650px;
+	overflow-wrap: break-word;
+}
+
+.showcase img {
+	filter: drop-shadow(0.25rem 0.25rem 0.5rem #000000);
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  border: 1px solid #333;
+  padding: 8px;
+}
+
+th {
+  min-width: 80px;
+  background-color: rgb(48, 52, 54);
+  color: #dfdfdf;
+}
+
+.sideBySide {
+	display: flex;
+	justify-content: space-evenly;
+	gap: 10px;
+}
+
+#checkoutForm input {
+	width: 99%;
+	margin-bottom: 15px;
+}
+
+#checkoutForm {
+	min-width: 600px;
+	background-color: #1a1c1d;
+	display: inline-block;
+	vertical-align: top;
+	border: None;
+	padding: 0;
+}
+
+.orderSummary {
+	display: inline-block;
+	width: 250px;
+	min-height: 320px;
+    padding: 20px;
+    background-color: #1a1c1d;
+	margin-left: 40px;
+}
+
+.orderSummary h1{
+	margin: 0 0 20px;
+}
+
+#checkout{
+	width: 245px;
+	display: block;
+}
+
+input[type='checkbox'] {
+  display: inline-block;
+  width: 16px !important;
+  vertical-align: middle;
+  background-color: rgb(48, 52, 54);
+  margin-top: 1em;
+}
+
+#photos {
+	border: 0;
+	background-color: #1f2122;
+}
+
+.orderItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.itemLabel, .itemValue {
+    font-size: 16px;
+}
+
+.itemLabel {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.info-container {
+    display: flex;
+	font-size: 1rem;
+    flex-wrap: wrap;
+    background-color: #1a1c1d;
+    color: #c4c4c4;
+    padding: 10px;
+    margin: -10px;
+}
+
+.info-section {
+    flex-basis: calc(33.333% - 20px);
+    margin: 10px;
+    background-color: #1a1c1d;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 1200px) {
+    .info-container {
+        justify-content: center;
+    }
+    .info-section {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #686868;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}

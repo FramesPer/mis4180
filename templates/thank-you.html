@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				{% if session['username'] %}
+					<a href="{{ url_for('create_hologram') }}">Create Hologram</a>
+					<a href="{{ url_for('orders') }}">My Orders</a>
+					<a href="{{ url_for('logout') }}">Logout</a>
+				{% else -%}
+					<br>
+					<a href="{{ url_for('login_page') }}">Login</a>
+					<br>
+					<a href="{{ url_for('register_page') }}">Create Account</a>
+				{% endif %}
+			</div>
+		</div>
+		<h2>Order Confirmed!</h2>
+		<p>Thank you for your interest in Holovilla!</p>
+		<br>
+		<p>Your order number is #{{order_number}}.</p>
+		<p>Placed {{ order_time }}</p>
+		<p>We will now process your order and begin designing your hologram.</p>
+	</body>
+</html>

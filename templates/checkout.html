@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				{% if session['username'] %}
+					<a href="{{ url_for('create_hologram') }}">Create Hologram</a>
+					<a href="{{ url_for('orders') }}">My Orders</a>
+					<a href="{{ url_for('logout') }}">Logout</a>
+				{% else -%}
+					<br>
+					<a href="{{ url_for('login_page') }}">Login</a>
+					<br>
+					<a href="{{ url_for('register_page') }}">Create Account</a>
+				{% endif %}
+			</div>
+		</div>
+
+		<form id="checkoutForm" action="/thank-you" method="post">
+			<h1>Contact Information</h1>
+			<input placeholder="Email" value={{user_email}} id="emailAddress" />
+			<label id="notifLabel"><input id="notif" type="checkbox"> Email Notifications</label>
+
+			<div class="sideBySide">
+				<input placeholder="First Name" id="firstName" />
+				<input placeholder="Last Name" id="lastName" />
+			</div>
+
+			<input placeholder="Billing Address" id="billingAddress" />
+
+			<h1>Payment</h1>
+
+			<input placeholder="Credit Card" maxlength="16" id="cardNumber" />
+			<div class="sideBySide">
+				<input placeholder="MM/YY" maxlength="7" id="expirationDate" />
+				<input placeholder="CVV" maxlength="4" id="cardCVC" />
+			</div>
+
+			<button id="checkout">Pay now</button>
+		</form>
+
+		<div class="orderSummary">
+			<h1>Order Summary</h1>
+			<div class="orderItem">
+				<span class="itemLabel">Dimensions</span>
+				<span class="itemValue">{{ holo_specs['buildingDimensions'] }}</span>
+			</div>
+			<div class="orderItem">
+				<span class="itemLabel">Style</span>
+				<span class="itemValue">{{ holo_specs['architecturalStyle'] }}</span>
+			</div>
+			<div class="orderItem">
+				<span class="itemLabel">Type</span>
+				<span class="itemValue">{{ holo_specs['buildingType'] }}</span>
+			</div>
+			<br>
+			<div class="orderItem">
+				<span class="itemLabel">Price</span>
+				<span class="itemValue">$0.00</span>
+			</div>
+		</div>
+	</body>
+</html>

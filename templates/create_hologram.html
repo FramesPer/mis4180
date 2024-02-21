@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				{% if session['username'] %}
+					<a href="{{ url_for('create_hologram') }}">Create Hologram</a>
+					<a href="{{ url_for('orders') }}">My Orders</a>
+					<a href="{{ url_for('logout') }}">Logout</a>
+				{% else -%}
+					<br>
+					<a href="{{ url_for('login_page') }}">Login</a>
+					<br>
+					<a href="{{ url_for('register_page') }}">Create Account</a>
+				{% endif %}
+			</div>
+		</div>
+
+		<form id="creationForm" action="/checkout" method="post">
+			<h1>Building Specifications</h1>
+			<div>
+				<label for="buildingDimensions">Building Dimensions</label>
+				<input maxlength="90" name="buildingDimensions" id="buildingDimensions" />
+			</div>
+			<div>
+				<label for="architectural-style">Choose an Architectural Style:</label>
+				<select name="architecturalStyle" id="architectural-style">
+					<option value="modern">Modern</option>
+					<option value="victorian">Victorian</option>
+					<option value="artDeco">Art Deco</option>
+					<option value="colonial">Colonial</option>
+					<option value="gothic">Gothic</option>
+				</select>
+			</div>
+			<label for="buildingType">Building Type</label>
+			<select name="buildingType" id="buildingType">
+				<option value="agricultural">Agricultural</option>
+				<option value="commercial">Commercial</option>
+				<option value="cultural">Cultural</option>
+				<option value="educational">Educational</option>
+				<option value="environmental">Environmental</option>
+				<option value="government">Government</option>
+				<option value="healthcare">Healthcare</option>
+				<option value="historical">Historical</option>
+				<option value="hospitality">Hospitality</option>
+				<option value="industrial">Industrial</option>
+				<option value="infrastructure">Infrastructure</option>
+				<option value="monument">Monument</option>
+				<option value="recreational">Recreational</option>
+				<option value="religious">Religious</option>
+				<option value="residential">Residential</option>
+				<option value="retail">Retail</option>
+				<option value="skyscraper">Skyscraper</option>
+				<option value="sports">Sports</option>
+				<option value="transportation">Transportation</option>
+				<option value="other">Other</option>
+			</select>
+
+			<label for="purpose">Purpose of the Hologram</label>
+			<input maxlength="90" name="purpose" id="purpose" />
+
+			<label for="additional">Additional Comments / Requests</label>
+			<textarea maxlength="420" id="additional" name="additional"></textarea>
+
+			<label for="photos" id="photosID">Upload Photos of Building</label>
+			<input type="file" id="photos" accept="image/png, image/jpeg" multiple />
+			
+			<p class="textWrap">Please ensure all required information is provided. For guidance on photo submissions, refer to our photo guidelines.</p>
+
+			<button class="continueButton">Continue To Checkout</button>
+			{% if error_message %}
+			<div style="color: red;">{{ error_message }}</div>
+			{% endif %}
+		</form>
+	</body>
+</html>

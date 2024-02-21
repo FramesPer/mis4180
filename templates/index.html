@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				{% if session['username'] %}
+					<a href="{{ (url_for('create_hologram')) }}">Create Hologram</a>
+					<a href="{{ url_for('orders') }}">My Orders</a>
+					<a href="{{ url_for('logout') }}">Logout</a>
+				{% else -%}
+					<br>
+					<a href="{{ url_for('login_page') }}">Login</a>
+					<br>
+					<a href="{{ url_for('register_page') }}">Create Account</a>
+				{% endif %}
+			</div>
+		</div>
+		<p>Holovilla creates bespoke holographic representations of buildings, from homes to commercial structures. We transform your specifications and images into immersive, three-dimensional holograms, offering a new perspective on architectural design and visualization. Simple, elegant, and tailored to you.</p>
+		<br>
+
+		<h2>Our Mission</h2>
+		<p>Holovilla designs precise, high-quality holograms of your spaces using the finest technology .
+
+		<hr>
+
+		<div class="info-container">
+			<div class="info-section">
+				<h2>Custom Creations</h2>
+				<p>Bring your vision to life with holograms designed just for you. Share your ideas, and we'll craft them into a personalized holographic experience.</p>
+			</div>
+			<div class="info-section">
+				<h2>Highest Quality</h2>
+				<p>Experience every detail with our sharp, high-resolution holograms. Quality you can see, for a design that's truly yours.</p>
+			</div>
+			<div class="info-section">
+				<h2>Cutting-Edge Tech</h2>
+				<p>We use the latest tech to make holograms that are not just advanced, but also easy to use and integrate into your projects.</p>
+			</div>
+			<div class="info-section">
+				<h2>Interactive Display</h2>
+				<p>Step into the future with holograms you can move and change. Explore your designs like never before.</p>
+			</div>
+			<div class="info-section">
+				<h2>Quick and Easy Setup</h2>
+				<p>Get started in no time. Our holograms are made to be simple to set up, so you can focus on what's important—your design.</p>
+			</div>
+		</div>
+	</body>
+</html>
