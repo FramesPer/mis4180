@@ -7,8 +7,9 @@
 		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
 	</head>
 	<body>
+		<a id="headerLink" href="/">Holovilla</a>
+		<br><br>
 		<h1>Login</h1>
-
 		{% if registration_status == "registered" %}
 			<div id="success-message" style="color: green;">Registration successful. You may now login.</div>
 			<script>

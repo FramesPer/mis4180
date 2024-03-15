@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				<br>
+				<a href="{{ url_for('view_baseline_db') }}">View Baseline Database</a>
+				<a href="{{ url_for('login_page') }}">Login</a>
+				<a href="{{ url_for('register_page') }}">Create Account</a>
+			</div>
+		</div>
+		<p>This is the <i>unsafe</i> baseline.</p>
+		{% include "form-data.html" %}
+</html>

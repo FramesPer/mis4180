@@ -8,6 +8,10 @@ viewed on any device that supports it. The main goal of this project is to focus
 on how we manage and process the data between the user (client) and the system
 (server) on the backend.
 
+You can deploy it almost anywhere.
+
+<https://getdeploying.com/>
+
 ## Important TODOs
 
 1. Make a *before* security controls page.
@@ -17,6 +21,7 @@ As noted in the meeting, there should be a page that demonstrates an insecure pa
 2. Status Field in `hologram` table.
 
 Create the status field and also a way to change it. The `status` should be populated by default and the ability to change it could be accessable via a special user `admin` for example. The `admin` user can see all orders and modify the status as well.
+
 
 ## Model of data flow:
 

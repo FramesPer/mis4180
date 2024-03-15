@@ -16,8 +16,8 @@
 					<a href="{{ url_for('logout') }}">Logout</a>
 				{% else -%}
 					<br>
+					<a href="{{ url_for('baseline') }}">Baseline (unsafe)</a>
 					<a href="{{ url_for('login_page') }}">Login</a>
-					<br>
 					<a href="{{ url_for('register_page') }}">Create Account</a>
 				{% endif %}
 			</div>
@@ -50,6 +50,10 @@
 			<div class="info-section">
 				<h2>Quick and Easy Setup</h2>
 				<p>Get started in no time. Our holograms are made to be simple to set up, so you can focus on what's important—your design.</p>
+			</div>
+			<div class="info-section">
+				<img src="{{ url_for('static', filename='angryDuck.png') }}">
+				<p style="display: inline-block;vertical-align:top;"><i>don't mess with duck.</i></p>
 			</div>
 		</div>
 	</body>

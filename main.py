@@ -13,10 +13,38 @@ import sqlite3
 import bcrypt
 import creds
 import datetime
-from helpers import fetch_email, init_backend, recent_order_number
+from helpers import fetch_email, init_backend, unsafe_db_init, recent_order_number
 
 app = Flask(__name__)
 app.secret_key = creds.session_key
+
+@app.errorhandler(404)
+def bad_resource(_):
+    return render_template('bad_resource.html'), 404
+
+@app.route('/unsafe_baseline_viewer', methods=['GET', 'POST'])
+def view_baseline_db():
+    con = sqlite3.connect("backend_unsafe.db", timeout=10)
+    cur = con.cursor()
+    cur.execute("SELECT hologram_id, building_dimensions, building_style, building_type, purpose, additional_info FROM unsafe_holo")
+    info = order_crate(cur.fetchall())
+    con.close()
+    return render_template('view_baseline_db.html', rows=info)
+
+@app.route('/unsafe-transfer', methods=['GET', 'POST'])
+def unsafe_transfer():
+    specs = request.form
+    con = sqlite3.connect("backend_unsafe.db", timeout=10)
+    cur = con.cursor()
+    cur.execute("INSERT INTO unsafe_holo (building_dimensions, building_style, building_type, purpose, additional_info) VALUES (?, ?, ?, ?, ?);", (specs['buildingDimensions'], specs['architecturalStyle'], specs['buildingType'], specs['purpose'], specs['additional']))
+    con.commit()
+    con.close()
+
+    return render_template('unsafe_confirmation.html')
+
+@app.route('/baseline', methods=['GET', 'POST'])
+def baseline():
+    return render_template('baseline.html')
 
 @app.route('/thank-you', methods=['GET', 'POST'])
 def confirmation():
@@ -204,4 +232,5 @@ def logout():
 
 if __name__ == "__main__":
     init_backend()
+    unsafe_db_init()
     app.run()

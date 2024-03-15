@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Page Not Found</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+<style>
+	body {
+		max-width: 500px;
+	}
+	h2 {
+		font-size: 1.9rem;
+	}
+	img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 30%;
+	}
+</style>
+	<body>
+		<div class="header">
+			<img src="{{ url_for('static', filename='upset_duck.png') }}">
+			<h2>404 Error</h2>
+			<p>The magic cannot find this page. You've made it quite upset.</p>
+			<a href="/">Accept your fate and go back.</a>
+		</div>
+	</body>
+</html>
