@@ -14,22 +14,42 @@
 					{% if session['username'] == "admin" %}
 						<a href="{{ (url_for('admin_panel')) }}">Admin Panel</a>
 					{% endif %}
-					<a href="{{ (url_for('create_hologram')) }}">Create Hologram</a>
+
+					<div class="dropdown">
+						<a href="{{ (url_for('create_hologram')) }}">Create Hologram</a>
+						<div class="dropdown-content">
+							<a href="what_is_holograms">What Is This?</a>
+						</div>
+					</div> 
+
 					<a href="{{ url_for('orders') }}">My Orders</a>
 					<a href="{{ url_for('logout') }}">Logout</a>
 				{% else -%}
 					<br>
-					<a href="{{ url_for('baseline') }}">Baseline (unsafe)</a>
-					<a href="{{ url_for('login_page') }}">Login</a>
+					<div class="dropdown">
+						<a href="{{ url_for('baseline') }}">Baseline (unsafe)</a>
+						<div class="dropdown-content">
+							<a href="what_is_baseline">What Is This? Scary, that's what.</a>
+						</div>
+					</div> 
+					<div class="dropdown">
+						<a href="{{ url_for('login_page') }}">Login</a>
+						<div class="dropdown-content">
+							<a href="what_is_login">What Is This?</a>
+						</div>
+					</div> 
+
 					<a href="{{ url_for('register_page') }}">Create Account</a>
 				{% endif %}
 			</div>
 		</div>
 		<p>Holovilla creates bespoke holographic representations of buildings, from homes to commercial structures. We transform your specifications and images into immersive, three-dimensional holograms, offering a new perspective on architectural design and visualization. Simple, elegant, and tailored to you.</p>
-		<br>
 
+		<p>You can learn more about the deployment of this project via the <a href="{{ (url_for('deployment_docs')) }}">deployment docs</a>.</p>
+
+		<br>
 		<h2>Our Mission</h2>
-		<p>Holovilla designs precise, high-quality holograms of your spaces using the finest technology .
+		<p>Holovilla designs precise, high-quality holograms of your spaces using the finest technology.
 
 		<hr>
 

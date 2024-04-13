@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				{% if session['username'] %}
+					{% if session['username'] == "admin" %}
+						<a href="{{ (url_for('admin_panel')) }}">Admin Panel</a>
+					{% endif %}
+
+					<a href="{{ (url_for('create_hologram')) }}">Create Hologram</a>
+
+					<a href="{{ url_for('orders') }}">My Orders</a>
+					<a href="{{ url_for('logout') }}">Logout</a>
+				{% else -%}
+					<br>
+					<a href="{{ url_for('baseline') }}">Baseline (unsafe)</a>
+					<a href="{{ url_for('login_page') }}">Login</a>
+					<a href="{{ url_for('register_page') }}">Create Account</a>
+				{% endif %}
+			</div>
+		</div>
+		<p>The login code is made up of getting the input from the user from the front end, and checking if it is valid in the database. However, passwords are NOT stored in plain text as this would be a security nightmare.</p>
+		<p>Rather, they are hashed and salted.</p>
+		<img src="{{ url_for('static', filename='login_diagram.png') }}">
+	</body>
+</html>

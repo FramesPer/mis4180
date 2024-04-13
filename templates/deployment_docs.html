@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				{% if session['username'] %}
+					{% if session['username'] == "admin" %}
+						<a href="{{ (url_for('admin_panel')) }}">Admin Panel</a>
+					{% endif %}
+
+					<a href="{{ (url_for('create_hologram')) }}">Create Hologram</a>
+
+					<a href="{{ url_for('orders') }}">My Orders</a>
+					<a href="{{ url_for('logout') }}">Logout</a>
+				{% else -%}
+					<br>
+					<a href="{{ url_for('baseline') }}">Baseline (unsafe)</a>
+					<a href="{{ url_for('login_page') }}">Login</a>
+					<a href="{{ url_for('register_page') }}">Create Account</a>
+				{% endif %}
+			</div>
+		</div>
+		<h1>Holovilla Deployment Docs</h1>
+		<p>You can access the source code and more technical documentation for this project on my GitHub: <a href="https://github.com/abql/mis4180">https://github.com/abql/mis4180</a></p>
+		<h2>Model of data flow:</h2>
+		<p>Basically, the user will navigate to the website via their web browser. They do this by typing the IPv4 address of the VPS. It is now the responsibility of nginx to call gunicorn which hosts the contents of the website. It does this by reverse proxy. It listens for connections on port 80 (default http:// port) and passes the requests to 127.0.0.1:8000 (the localhost port 8000 which is gunicorn's port).</p>
+
+		<br>
+		<h2>The Tech Stack</h2>
+		<p>The following technologies were used in this project:</p>
+
+		<ul>
+			<li>
+				<p><a href="https://crates.io/crates/migi">Migi</a> Super cool static site generator I wrote in the Rust programming language! It was responsible for generating much of the HTML you are reading right now. You can install it from <a href="https://crates.io/">crates.io</a> if you would like to give it a try! I'm planning on doing a rewrite of it <b>from scratch</b> very soon.</p>
+            </li>
+			<li>
+				<p><a href="https://www.python.org/">Python3</a> Responsible for the actual logic and interfacing with SQLite3 and Flask.</p>
+            </li>
+            <li>
+                <p><a href="https://flask.palletsprojects.com/en/3.0.x/">Flask</a> Lightweight web framework for Python</p>
+            </li>
+            <li>
+                <p><a href="https://gunicorn.org/">Gunicorn</a> WSGI HTTP Server for UNIX (because Flask’s built-in WSGI is not meant for production).</p>
+            </li>
+            <li>
+                <p><a href="https://www.sqlite.org/index.html">SQLite</a> SQL Database Engine.</p>
+            </li>
+            <li>
+                <p><a href="https://www.vultr.com/">Vultr</a> Global Cloud Infrastructure (VPS).</p>
+            </li>
+            <li>
+                <p><a href="https://nginx.org/en/">nginx</a> HTTP and reverse proxy server.</p>
+            </li>
+            <li>
+                <p><a href="https://man.archlinux.org/man/ufw.8">ufw</a> Uncomplicated Firewall (port 80 allow)</p>
+            </li>
+            <li>
+                <p><a href="https://www.debian.org/">Debian Linux</a> The Operating System the VPS runs (because Windows & MS are disgusting).</p>
+            </li>
+        </ul>
+        <p>For the purposes of user registration and login, the system stores information (such as username, email, and password) in the <code>user</code> table of the backend.</p>
+        <p>The passwords are hashed using the <code>Bcrypt</code> hashing algorithm designed by Nelis Provos and David Mazières. The passwords are salted before being hashed to improve security against rainbow-table / lookup attacks. The hash is completely random and not accessible to anyone, <a href="https://www.geeksforgeeks.org/hashing-passwords-in-python-with-bcrypt/">not even me</a>.</p>
+        <h2>Helpful Resources</h2>
+        <p>Some of the concepts regarding security and controls implemented in the site abide by the OWASP secure login guide: <a href="https://owasp.org/www-pdf-archive/How_to_Build_a_Secure_Login_BenBroussard_June2011.pdf">https://owasp.org/www-pdf-archive/How_to_Build_a_Secure_Login_BenBroussard_June2011.pdf</a></p>
+
+		<p>You can deploy it almost anywhere.</p>
+		<a href="https://getdeploying.com">https://getdeploying.com</a>
+	</body>
+</html>

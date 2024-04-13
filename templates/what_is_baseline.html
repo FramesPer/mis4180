@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				<br>
+				<a href="{{ url_for('baseline') }}">Baseline (unsafe)</a>
+				<a href="{{ url_for('login_page') }}">Login</a>
+				<a href="{{ url_for('register_page') }}">Create Account</a>
+			</div>
+		</div>
+		<h1>Baseline Explanation</h1>
+		<p>This is the baseline of the system. Basically, it is supposed to represent the <i>insecure</i> way of doing things. There is no accounts. No HTTP cookies, no sessions of any kind. There isn't even any kind of input validation.</p>
+	</body>
+</html>

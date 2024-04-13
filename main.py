@@ -32,6 +32,22 @@ def db_info_handler(db: str):
 
     return info
 
+@app.route("/what_is_holograms")
+def what_is_holograms():
+    return render_template("what_is_holograms.html")
+
+@app.route("/what_is_baseline")
+def what_is_baseline():
+    return render_template("what_is_baseline.html")
+
+@app.route("/what_is_login")
+def what_is_login():
+    return render_template("what_is_login.html")
+
+@app.route("/deployment_docs")
+def deployment_docs():
+    return render_template("deployment_docs.html")
+
 def create_updated_status_obj(existing_info, updated_info):
     uVal = {}
     updatedOrders = []

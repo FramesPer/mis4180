@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Holovilla - Bring Your Home to Life</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<div class="header">
+			<a id="headerLink" href="/">Holovilla</a>
+			<div class="accountSection">
+				{% if session['username'] %}
+					{% if session['username'] == "admin" %}
+						<a href="{{ (url_for('admin_panel')) }}">Admin Panel</a>
+					{% endif %}
+
+					<a href="{{ (url_for('create_hologram')) }}">Create Hologram</a>
+
+					<a href="{{ url_for('orders') }}">My Orders</a>
+					<a href="{{ url_for('logout') }}">Logout</a>
+				{% else -%}
+					<br>
+					<a href="{{ url_for('baseline') }}">Baseline (unsafe)</a>
+					<a href="{{ url_for('login_page') }}">Login</a>
+					<a href="{{ url_for('register_page') }}">Create Account</a>
+				{% endif %}
+			</div>
+		</div>
+		<p>This is the main <i>business logic</i> of what Holovilla does and how it operates. </p>
+		<p>Below is a value-chain diagram.</p>
+		<img src="{{ url_for('static', filename='what_are_holograms_img.png') }}">
+		<h1>An Explanation</h1>
+		<p>Users can share the details of their homes, and the business will turn those details into a hologram. This hologram can be viewed on any device that supports it. The <b>main goal of this project</b> is to focus on how we manage and process the data between the user <i>(client)</i> and the system <i>(server)</i> on the backend.</p>
+	</body>
+</html>
