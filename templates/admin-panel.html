@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Holovilla - Administrator Panel</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}">
+</head>
+<body>
+	<div class="header">
+		<a id="headerLink" href="/">Holovilla</a>
+		<div class="accountSection">
+			{% if session['username'] %}
+			{% if session['username'] == "admin" %}
+			<a href="{{ (url_for('admin_panel')) }}">Admin Panel</a>
+			{% endif %}
+			<a href="{{ (url_for('create_hologram')) }}">Create Hologram</a>
+			<a href="{{ url_for('orders') }}">My Orders</a>
+			<a href="{{ url_for('logout') }}">Logout</a>
+			{% else -%}
+			<br>
+			<a href="{{ url_for('baseline') }}">Baseline (unsafe)</a>
+			<a href="{{ url_for('login_page') }}">Login</a>
+			<a href="{{ url_for('register_page') }}">Create Account</a>
+			{% endif %}
+		</div>
+	</div>
+
+	<div class="orders">
+		<div class="adminSubmitter">
+			<input type="text" id="searchInput" placeholder="Search orders..." onkeyup="searchOrders()">
+		</div>
+		<form id="creationForm" action="/admin-panel" method="post">
+			<table id="ordersTable">
+				{% if rows %}
+				<tr>
+					<th>Order #</th>
+					<th>Dimensions</th>
+					<th>Building Style</th>
+					<th>Building Type</th>
+					<th>Purpose</th>
+					<th>Status</th>
+				</tr>
+				{% for row in rows %}
+				<tr>
+					<td>{{ row[0] }}</td>
+					<td>{{ row[1] }}</td>
+					<td>{{ row[2] }}</td>
+					<td>{{ row[3] }}</td>
+					<td>{{ row[4] }}</td>
+					<td>
+						<select name="status" id="status">
+							<option value="pending">Pending</option>
+							<option value="in-progress">In Progress</option>
+							<option value="completed">Completed</option>
+						</select>
+					</td>
+				</tr>
+				{% endfor %}
+				{% endif %}
+			</table>
+			<button id="submitButton">Submit Changes</button>
+		</form>
+	</div>
+
+	<!-- Just some barely working nonsense JS. kek -->
+	<script>
+		function searchOrders() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById('searchInput');
+			filter = input.value.toUpperCase();
+			table = document.getElementById('ordersTable');
+			tr = table.getElementsByTagName('tr');
+
+			for (i = 1; i < tr.length; i++) {
+				tr[i].style.display = "none";
+				td = tr[i].getElementsByTagName('td');
+				for (var j = 0; j < td.length; j++) {
+					if (td[j]) {
+						txtValue = td[j].textContent || td[j].innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+							break;
+						}
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html>

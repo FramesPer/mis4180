@@ -9,11 +9,12 @@ Helpful Resources:
 - https://owasp.org/www-pdf-archive/How_to_Build_a_Secure_Login_BenBroussard_June2011.pdf
 """
 from flask import Flask, render_template, request, session, redirect, url_for
+from werkzeug.datastructures import ImmutableMultiDict
 import sqlite3
 import bcrypt
 import creds
 import datetime
-from helpers import fetch_email, init_backend, unsafe_db_init, recent_order_number
+from helpers import fetch_email, init_backend, unsafe_db_init, recent_order_number, update_database_status
 
 app = Flask(__name__)
 app.secret_key = creds.session_key
@@ -21,6 +22,46 @@ app.secret_key = creds.session_key
 @app.errorhandler(404)
 def bad_resource(_):
     return render_template('bad_resource.html'), 404
+
+def db_info_handler(db: str):
+    con = sqlite3.connect(db, timeout=10)
+    cur = con.cursor()
+    cur.execute("SELECT h.hologram_id, u.username, h.building_dimensions, h.building_style, h.building_type, h.purpose, h.additional_info, h.status FROM hologram h JOIN user u ON h.user_id = u.user_id")
+    info = order_crate(cur.fetchall())
+    con.close()
+
+    return info
+
+def create_updated_status_obj(existing_info, updated_info):
+    uVal = {}
+    updatedInfoCont = []
+    updatedOrders = []
+
+    for key in updated_info.keys():
+        uVal[key] = updated_info.getlist(key)
+
+    for (i, order) in enumerate(existing_info):
+        value = uVal['status'][i]
+        order = order[:-1] + (value,)
+        updatedOrders.append(order)
+
+    return updatedOrders
+
+@app.route('/admin-panel', methods=['GET', 'POST'])
+def admin_panel():
+    info = db_info_handler("backend.db")
+    if request.method == 'GET':
+        if session.get('username') == 'admin':
+            return render_template('admin-panel.html', rows=info)
+
+    if request.method == 'POST':
+        update = create_updated_status_obj(info, request.form)
+        print("[INFO]: updating the db")
+        update_database_status(update)
+        # obviously fix this to have valid msg or something
+        return render_template("index.html")
+
+    return render_template('bad_resource.html')
 
 @app.route('/unsafe_baseline_viewer', methods=['GET', 'POST'])
 def view_baseline_db():
@@ -96,7 +137,7 @@ def populate_hologram_fields(specs):
     cur = con.cursor()
     user_id = fetch_user_id()
 
-    cur.execute("INSERT INTO hologram (building_dimensions, building_style, building_type, purpose, additional_info, user_id) VALUES (?, ?, ?, ?, ?, ?);", (specs['buildingDimensions'], specs['architecturalStyle'], specs['buildingType'], specs['purpose'], specs['additional'], user_id))
+    cur.execute("INSERT INTO hologram (building_dimensions, building_style, building_type, purpose, additional_info, status, user_id) VALUES (?, ?, ?, ?, ?, ?, ?);", (specs['buildingDimensions'], specs['architecturalStyle'], specs['buildingType'], specs['purpose'], specs['additional'], "Pending", user_id))
     con.commit()
     con.close()
 
@@ -121,7 +162,7 @@ def orders():
     if 'username' in session:
         con = sqlite3.connect("backend.db", timeout=10)
         cur = con.cursor()
-        cur.execute("SELECT hologram_id, building_dimensions, building_style, building_type, purpose, additional_info FROM hologram WHERE user_id = ?", (fetch_user_id(),))
+        cur.execute("SELECT hologram_id, building_dimensions, building_style, building_type, purpose, additional_info, status FROM hologram WHERE user_id = ?", (fetch_user_id(),))
         info = order_crate(cur.fetchall())
         con.close()
         return render_template('orders.html', rows=info)

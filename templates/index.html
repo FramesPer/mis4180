@@ -11,6 +11,9 @@
 			<a id="headerLink" href="/">Holovilla</a>
 			<div class="accountSection">
 				{% if session['username'] %}
+					{% if session['username'] == "admin" %}
+						<a href="{{ (url_for('admin_panel')) }}">Admin Panel</a>
+					{% endif %}
 					<a href="{{ (url_for('create_hologram')) }}">Create Hologram</a>
 					<a href="{{ url_for('orders') }}">My Orders</a>
 					<a href="{{ url_for('logout') }}">Logout</a>

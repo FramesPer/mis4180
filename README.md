@@ -14,9 +14,16 @@ You can deploy it almost anywhere.
 
 ## Important TODOs
 
-1. Make a *before* security controls page.
+1. Each page needs a diagram under it!
 
-As noted in the meeting, there should be a page that demonstrates an insecure page before any kind of security related controls are implemented.
+**(Risk Analysis part can go under Baseline)**
+
+So, the homepage should have a value-chain diagram.
+The login page should have the relevent stuff, etc.
+
+Make tags under each section (like login, so if you click login it goes to login, but hovering will show you a dropdown called "explaination" or something like that. That will then take you to the HTML page that shows the diagram and explains it.
+
+It is possible all those Figure comments in the latest feedback are referring to that long list that I copy and pasted. You may need to actually create some of them (he said something on March 26 Zoom about setting it to 100 in the column).
 
 2. Status Field in `hologram` table.
 

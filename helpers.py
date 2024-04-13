@@ -18,6 +18,7 @@ def init_backend():
                 building_type TEXT NOT NULL,
                 purpose TEXT,
                 additional_info TEXT,
+                status TEXT NOT NULL,
                 user_id INTEGER NOT NULL,
                 FOREIGN KEY (user_id)
                     REFERENCES user (user_id)
@@ -62,4 +63,19 @@ def recent_order_number(username):
     """, (username,))
     last_order = cur.fetchone()
     con.close()
+
     return last_order[0] if last_order else None
+
+def update_database_status(updates):
+    con = sqlite3.connect("backend.db")
+    cur = con.cursor()
+    for change in updates:
+        print("[DIFF] {}".format(change))
+        cur.execute("""
+            UPDATE hologram 
+            SET status = ?
+            WHERE hologram_id = ?
+        """, (change[len(change)-1], change[0]))  # this needs to be user_id
+
+    con.commit()
+    con.close()
