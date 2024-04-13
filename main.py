@@ -34,16 +34,18 @@ def db_info_handler(db: str):
 
 def create_updated_status_obj(existing_info, updated_info):
     uVal = {}
-    updatedInfoCont = []
     updatedOrders = []
 
     for key in updated_info.keys():
         uVal[key] = updated_info.getlist(key)
 
     for (i, order) in enumerate(existing_info):
-        value = uVal['status'][i]
-        order = order[:-1] + (value,)
-        updatedOrders.append(order)
+        current_status = order[-1]
+        updated_status = uVal['status'][i]
+
+        if current_status != updated_status:
+            new_order = order[:-1] + (updated_status,)
+            updatedOrders.append(new_order)
 
     return updatedOrders
 
@@ -58,7 +60,7 @@ def admin_panel():
         update = create_updated_status_obj(info, request.form)
         print("[INFO]: updating the db")
         update_database_status(update)
-        # obviously fix this to have valid msg or something
+
         return render_template("index.html")
 
     return render_template('bad_resource.html')
@@ -130,6 +132,7 @@ def fetch_user_id():
     cur = con.cursor()
     name = cur.execute("SELECT user_id FROM user WHERE username = ?;", (session['username'],))
     user_id = name.fetchone()[0]
+
     return user_id
 
 def populate_hologram_fields(specs):
@@ -179,6 +182,7 @@ def register_account(username, password, email):
 def attempt_login(stored_pass, submitted_pass):
     submitted_pass_utf8 = submitted_pass.encode('utf-8')
     stored_pass_utf8 = stored_pass.encode('utf-8')
+
     if bcrypt.checkpw(submitted_pass_utf8, stored_pass_utf8):
         return True
     return False
@@ -201,6 +205,7 @@ def login_account(username, password):
     con.close()
 
     err_msg = login_checker(password, actual_password)
+
     if err_msg:
         return render_template("login.html", error_message=err_msg)
     else:
@@ -213,6 +218,7 @@ def login_page():
         username = request.form['username']
         password = request.form['password']
         return login_account(username, password)
+
     return render_template("login.html")
 
 def blowfish_hash(plaintext_password):
@@ -225,12 +231,16 @@ def blowfish_hash(plaintext_password):
 def validation_checks(username, password, email):
     if len(username) < 4 or len(username) > 18:
         return "Username is either too short or too long."
+
     if username.__contains__(" "):
         return "Spaces are not allowed your username."
+
     if len(password) < 6:
         return "Password is too short. Use a length of (6 < p < 128)."
+
     if len(password) > 128:
         return "Let's not make thing more complicated than they need to be... okay?"
+
     if len(email) < 4 or "@" not in email:
         return "Please enter a valid email address."
 
@@ -249,15 +259,16 @@ def validation_checks(username, password, email):
 def register_page():
     if request.method == 'POST':
         username = request.form['username'].strip()
-        email = request.form['emailAddress'].strip()
+        email    = request.form['emailAddress'].strip()
         password = request.form['password'].strip()
+        err_msg  = validation_checks(username, password, email)
 
-        err_msg = validation_checks(username, password, email)
         if err_msg:
             return render_template("register.html", error_message=err_msg)
 
         hashed_pass = blowfish_hash(password)
         register_account(username, hashed_pass, email)
+
         return render_template("login.html", registration_status="registered")
     else:
         return render_template("register.html")

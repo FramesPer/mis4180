@@ -75,7 +75,7 @@ def update_database_status(updates):
             UPDATE hologram 
             SET status = ?
             WHERE hologram_id = ?
-        """, (change[len(change)-1], change[0]))  # this needs to be user_id
+        """, (change[len(change)-1], change[0]))
 
     con.commit()
     con.close()
