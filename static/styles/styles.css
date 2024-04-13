@@ -119,6 +119,10 @@ select {
     width: 900px;
 }
 
+#adminCreationForm {
+    width: 1215px;
+}
+
 #creationForm button {
     width: 300px;
 }

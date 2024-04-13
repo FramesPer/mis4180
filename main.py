@@ -10,6 +10,7 @@ Helpful Resources:
 """
 from flask import Flask, render_template, request, session, redirect, url_for
 from werkzeug.datastructures import ImmutableMultiDict
+from urllib.parse import urlencode
 import sqlite3
 import bcrypt
 import creds
@@ -77,7 +78,7 @@ def admin_panel():
         print("[INFO]: updating the db")
         update_database_status(update)
 
-        return render_template("index.html")
+        return render_template("admin-panel.html", message='T', rows=info)
 
     return render_template('bad_resource.html')
 
@@ -131,17 +132,16 @@ def checkout():
     if 'username' not in session:
         return redirect(url_for('login_page'))
 
-    hologram_specs = None
     user_email = fetch_email(session['username'])[0]
+    hologram_specs = request.args.to_dict()
 
-    if request.method == 'POST':
-        hologram_specs = request.form
-        session['hologram_specs'] = hologram_specs.to_dict()
+    if hologram_specs:
+        session['hologram_specs'] = hologram_specs
 
-    if hologram_specs is None:
+    if 'hologram_specs' not in session:
         return redirect(url_for('create_hologram'))
     else:
-        return render_template('checkout.html', user_email=user_email, holo_specs=hologram_specs)
+        return render_template('checkout.html', user_email=user_email, holo_specs=session['hologram_specs'])
 
 def fetch_user_id():
     con = sqlite3.connect("backend.db", timeout=10)
@@ -160,13 +160,26 @@ def populate_hologram_fields(specs):
     con.commit()
     con.close()
 
+def check_create_hologram_fields(fields):
+    if fields['buildingDimensions'] == '':
+        return False
+    elif fields['purpose'] == '':
+        return False
+    else:
+        return True
+
 @app.route('/create_hologram', methods=['GET', 'POST'])
 def create_hologram():
     if 'username' not in session:
         return redirect(url_for('login_page'))
 
     if request.method == 'POST':
-        return redirect(url_for('checkout'))
+        data = request.form.to_dict()
+        query_string = urlencode(data)
+        if check_create_hologram_fields(data):
+            return redirect(url_for('checkout') + '?' + query_string)
+        else:
+            return render_template('create_hologram.html', error_message="Please fill out all required fields.")
 
     return render_template('create_hologram.html')
 

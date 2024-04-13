@@ -27,18 +27,34 @@
 	</div>
 
 	<div class="orders">
-		<div class="adminSubmitter">
-			<input type="text" id="searchInput" placeholder="Search orders..." onkeyup="searchOrders()">
-		</div>
-		<form id="creationForm" action="/admin-panel" method="post">
+		<form id="adminCreationForm" action="/admin-panel" method="post">
+			{% if message %}
+			<div id="success-message" style="color: green;">Success! Status for the user(s) has been updated.</div>
+			<script>
+				var sleep_time = 3000;
+				document.addEventListener('DOMContentLoaded', (event) => {
+					setTimeout(function() {
+						var messageElement = document.getElementById('success-message');
+						if (messageElement) {
+							messageElement.style.display = 'none';
+						}
+						window.location.replace(window.location.href);
+					}, sleep_time);
+				});
+			</script>
+			{% endif %}
+			<div class="adminSubmitter">
+				<input type="text" id="searchInput" placeholder="Search orders..." onkeyup="searchOrders()">
+				<button id="submitButton">Submit Changes</button>
+			</div>
 			<table id="ordersTable">
 				{% if rows %}
 				<tr>
 					<th>Order #</th>
+					<th>User</th>
 					<th>Dimensions</th>
 					<th>Building Style</th>
 					<th>Building Type</th>
-					<th>Purpose</th>
 					<th>Status</th>
 				</tr>
 				{% for row in rows %}
@@ -60,7 +76,6 @@
 				{% endfor %}
 				{% endif %}
 			</table>
-			<button id="submitButton">Submit Changes</button>
 		</form>
 	</div>
 
