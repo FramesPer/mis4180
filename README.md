@@ -1,36 +1,52 @@
 # MIS4180 Final Project
 
-This is my final project for professor Deng's mis course.
+This is my final project for MIS4180.
 
-The project is a website where users can share the details of their homes, and
+It is a website where users can share the details of their homes, and
 the business will turn those details into a hologram. This hologram can be
 viewed on any device that supports it. The main goal of this project is to focus
 on how we manage and process the data between the user (client) and the system
-(server) on the backend.
+(server).
+
+## Setup
+
+Clone this repository:
+
+```console
+git clone https://github.com/abql/mis4180.git
+```
+
+and install the dependencies listed in `requirements.txt` using pip:
+
+```console
+pip install -r requirements.txt
+```
+
+If using a virtual environment, be sure to activate that as well.
+
+### Help! creds.py is missing
+
+Yes, it is. That's on purpose.
+
+You can create your own `creds.py`. The purpose of this file is to store sensitive information related to how to Flask works with HTTPOnly cookies.
+
+You can create and populate the creds file using the following command:
+
+```console
+echo "session_key = 'SOME_RANDOM_DATA'" > creds.py
+```
+
+Of course, replace `SOME_RANDOM_DATA` with *actual* random data (e.g., fg3d51b359b223314a61adieaf196485)
+
+## Deployment
 
 You can deploy it almost anywhere.
 
 <https://getdeploying.com/>
 
-## Important TODOs
+You do not need to follow the deployment scheme provided in this documentation. You can use whichever web server/reverse proxy/WSGI you want.
 
-1. Each page needs a diagram under it!
-
-**(Risk Analysis part can go under Baseline)**
-
-So, the homepage should have a value-chain diagram.
-The login page should have the relevent stuff, etc.
-
-Make tags under each section (like login, so if you click login it goes to login, but hovering will show you a dropdown called "explaination" or something like that. That will then take you to the HTML page that shows the diagram and explains it.
-
-It is possible all those Figure comments in the latest feedback are referring to that long list that I copy and pasted. You may need to actually create some of them (he said something on March 26 Zoom about setting it to 100 in the column).
-
-2. Status Field in `hologram` table.
-
-Create the status field and also a way to change it. The `status` should be populated by default and the ability to change it could be accessable via a special user `admin` for example. The `admin` user can see all orders and modify the status as well.
-
-
-## Model of data flow:
+## Model of Data Flow
 
 ![](./imgs/dataflow_drawio.png)
 
@@ -46,7 +62,7 @@ as noted in [Flask's documentation](https://flask.palletsprojects.com/en/3.0.x/d
 
 > Do not use the development server when deploying to production. It is intended for use only during local development. It is not designed to be particularly secure, stable, or efficient.
 
-## The Tech Stack
+## Tech Stack
 - [Python3](https://www.python.org/) Responsible for the actual logic and
   interfacing with SQLite3 and Flask.
 
@@ -75,5 +91,5 @@ The passwords are hashed using the `Bcrypt` hashing algorithm designed by Nelis 
 
 Some of the concepts regarding security and controls implemented in the site
 abide by the owasp secure login guide:
-<https://owasp.org/www-pdf-archive/How_to_Build_a_Secure_Login_BenBroussard_June2011.pdf>
-
+- <https://owasp.org/www-pdf-archive/How_to_Build_a_Secure_Login_BenBroussard_June2011.pdf>
+- <https://flask.palletsprojects.com/en/3.0.x/>
