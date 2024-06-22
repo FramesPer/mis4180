@@ -10,13 +10,7 @@ on how we manage and process the data between the user (client) and the system
 
 ## Setup
 
-Clone this repository:
-
-```console
-git clone https://github.com/Rainswolves/mis4180.git
-```
-
-and install the dependencies listed in `requirements.txt` using pip:
+Clone this repository and install the dependencies listed in `requirements.txt` using pip:
 
 ```console
 pip install -r requirements.txt
